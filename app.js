@@ -36,6 +36,21 @@ app.get('/articles', (req, res) => {
   });
 });
 
+app.post('/articles', (req, res) => {
+    console.log(req.body)
+    const newArticle = new Article({
+        title: req.body.title,
+        content: req.body.content
+    });
+    newArticle.save((err) => {
+        if (!err) {
+            res.send('Successfully added a new article.');
+        } else {
+            res.send(err);
+        }
+    });
+});
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}!`);
 });
