@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect(
   //Account has been deleted from MongoDB Atlas
-  'mongodb+srv://dbatson09:ColtsnMGDB0108!@cluster0.urnq8y4.mongodb.net/wikiDB',
+  'mongodb+srv://dbatson09:<PASSWORD>@cluster0.urnq8y4.mongodb.net/wikiDB',
   {
     useNewUrlParser: true,
   }
