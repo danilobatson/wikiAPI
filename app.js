@@ -75,6 +75,38 @@ app
         : res.send('No articles matching that title were found.');
     });
   })
+  //PUT (update) a specific article
+  .put((req, res) => {
+    Article.updateOne(
+      { title: req.params.articleTitle },
+      //Update the article with the new title and content
+      {
+        $set: { title: req.body.title, content: req.body.content },
+      },
+      { overwrite: true },
+      (err) => {
+        !err
+          ? res.send('Successfully updated article.')
+          : res.send("Couldn't update article.");
+      }
+    );
+  })
+  //PATCH (update) a specific article
+  .patch((req, res) => {
+    Article.updateOne(
+      { title: req.params.articleTitle },
+      //Update the article with the new title and content
+      {
+        $set: req.body,
+      },
+      { overwrite: true },
+      (err) => {
+        !err
+          ? res.send('Successfully updated article.')
+          : res.send("Couldn't update article.");
+      }
+    );
+  })
   //Delete a specific article
   .delete((req, res) => {
     Article.deleteOne({ title: req.params.articleTitle }, (err) => {
