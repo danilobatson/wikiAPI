@@ -27,7 +27,9 @@ const articleSchema = new mongoose.Schema({
 const Article = mongoose.model('Article', articleSchema);
 
 app
+  //Requests targeting all articles
   .route('/articles')
+  //GET all articles
   .get((req, res) => {
     Article.find({}, (err, foundArticles) => {
       if (!err) {
@@ -37,8 +39,8 @@ app
       }
     });
   })
+  //POST a new article
   .post((req, res) => {
-    console.log(req.body);
     const newArticle = new Article({
       title: req.body.title,
       content: req.body.content,
@@ -51,6 +53,7 @@ app
       }
     });
   })
+  //DELETE all articles
   .delete((req, res) => {
     Article.deleteMany((err) => {
       if (!err) {
@@ -58,6 +61,24 @@ app
       } else {
         res.send(err);
       }
+    });
+  });
+
+app
+  //Requests targeting a specific article
+  .route('/articles/:articleTitle')
+  //GET a specific article
+  .get((req, res) => {
+    Article.findOne({ title: req.params.articleTitle }, (err, foundArticle) => {
+      foundArticle
+        ? res.send(foundArticle)
+        : res.send('No articles matching that title were found.');
+    });
+  })
+  //Delete a specific article
+  .delete((req, res) => {
+    Article.deleteOne({ title: req.params.articleTitle }, (err) => {
+      !err ? res.send('Successfully deleted the article.') : res.send(err);
     });
   });
 
